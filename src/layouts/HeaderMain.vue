@@ -1,7 +1,7 @@
 <template>
     
   
-      <v-app-bar app color="#022a38" class="home-page-header" height="80">
+      <v-app-bar app color="#022a38" class="home-page-header" height="80" elevation="5">
           <v-row class="fill-height" align="center" justify="space-between">
               
               

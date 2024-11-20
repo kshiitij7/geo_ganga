@@ -1,6 +1,6 @@
 <template>
-    
-    <v-app-bar app color="white" dark class="button-bar" height="40">
+    <div class = "Basin">
+    <v-app-bar app color="blue" dark class="button-bar" height="40" elevation="2">
       
       <v-btn @click="toggleLeftDrawer">
         <v-icon>mdi-menu</v-icon> Left
@@ -60,6 +60,7 @@
         </v-list>
       </v-navigation-drawer>
     </v-main>
+</div>
   </template>
   
   <script>
@@ -88,6 +89,9 @@
   </script>
   
   <style scoped>
+.Basin{
+    overflow: hidden;
+}
   
   </style>
   
