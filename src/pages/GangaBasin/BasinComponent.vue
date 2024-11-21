@@ -1,5 +1,6 @@
 <template>
 <div ref="map" class="map"></div>
+
 </template>
 
 <script>
@@ -17,11 +18,13 @@ import { get as getProjection } from 'ol/proj';
 export default {
     name: 'BasinComponent',
     mounted() {
-        const baseLayer = new TileLayer({
-            title: 'OpenStreet Map',
+        const osmLayer = new TileLayer({
+            title: 'Open Street Map',
             type: 'overlay',
             source: new OSM(),
+            visible: false,
         });
+        
 
         const bingLayer = new TileLayer({
             title: 'Bing ',
@@ -30,6 +33,7 @@ export default {
                 key: "ArIdKOW0eb8TRcLZdt0l2cG8kHA_uW92yIvx1aFzsQ1xHxpnVRMGmO0N0neY8P90",
                 imagerySet: 'AerialWithLabels',
             }),
+            visible: true,
         });
 
         const bhuvanLayer = new TileLayer({
@@ -46,6 +50,7 @@ export default {
                 url: "https://bhuvan-ras2.nrsc.gov.in/tilecache/tilecache.py",
 
             }),
+            visible: false,
 
         });
 
@@ -62,11 +67,28 @@ export default {
         serverType: 'geoserver',      
         tileGrid: new TileWMS().getTileGridForProjection(getProjection('EPSG:4326')),
       }),
+      visible: true,
+    });
+
+    const basinStatesBoundary = new TileLayer({
+      title: 'State Boundary', 
+      type: 'overlay',
+      source: new TileWMS({
+        url: 'http://192.168.17.37:8080/geoserver/Geo-Ganga/wms?',  
+        params: {
+          'LAYERS': 'states_boundary_ganga', 
+          'TILED': true,              
+          'VERSION': '1.1.1',         
+        },
+        serverType: 'geoserver',      
+        tileGrid: new TileWMS().getTileGridForProjection(getProjection('EPSG:4326')),
+      }),
+      visible: false,
     });
 
         const map = new Map({
             target: this.$refs.map,
-            layers: [bhuvanLayer, baseLayer, bingLayer, basinBoundary, ],
+            layers: [ bhuvanLayer,osmLayer,bingLayer,basinStatesBoundary,basinBoundary,],
             view: new View({
                 projection: 'EPSG:4326',
                 center: [78.9629, 20.5937],
@@ -80,6 +102,7 @@ export default {
             tipLabel: 'Layers',
             collapseLabel: '\u00BB',
             expandLabel: '\u00AB',
+            showRoot : false,
 
         });
         map.addControl(layerSwitcher);
@@ -91,5 +114,6 @@ export default {
 .map {
     width: 100%;
     height: 100%;
+    z-index:1000;
 }
 </style>

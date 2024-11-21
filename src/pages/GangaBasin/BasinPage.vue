@@ -2,14 +2,23 @@
     <div class = "Basin">
     <v-app-bar app color="blue" dark class="button-bar" height="40" elevation="2">
       
-      <v-btn @click="toggleLeftDrawer">
+      <v-btn color="black" elevation="3" @click="toggleLeftDrawer">
         <v-icon>mdi-menu</v-icon> Left
       </v-btn>
   
       <v-spacer></v-spacer>
-  
       
-      <v-btn @click="toggleRightDrawer">
+      <v-btn
+          class="fullscreen-btn"
+          icon
+          @click="toggleFullscreen"
+          color="black"
+          elevation="3"
+        >
+          <v-icon>mdi-fullscreen</v-icon>
+        </v-btn>
+        
+      <v-btn color="black" elevation="3" @click="toggleRightDrawer">
         <v-icon>mdi-menu</v-icon> Right
       </v-btn>
     </v-app-bar>
@@ -34,9 +43,10 @@
           </v-row>
         </v-list>
       </v-navigation-drawer>
-  
+
+      
       <!-- Map -->
-      <div style="width: 100%; height: 100vh;">
+      <div ref="basinRef" style="width: 100%; height: 100vh;">
         <BasinComponent />
       </div>
   
@@ -84,14 +94,24 @@
       toggleRightDrawer() {
         this.rightdrawer = !this.rightdrawer; 
       },
+      toggleFullscreen() {
+      const elem = this.$refs.basinRef;
+      if (!document.fullscreenElement) {
+        elem.requestFullscreen().catch(err => {
+          console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
     },
-  };
+  },
+};
   </script>
   
   <style scoped>
 .Basin{
     overflow: hidden;
 }
-  
+
   </style>
   
