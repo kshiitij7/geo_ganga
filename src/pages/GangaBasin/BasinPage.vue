@@ -8,15 +8,7 @@
   
       <v-spacer></v-spacer>
       
-      <v-btn
-          class="fullscreen-btn"
-          icon
-          @click="toggleFullscreen"
-          color="black"
-          elevation="3"
-        >
-          <v-icon>mdi-fullscreen</v-icon>
-        </v-btn>
+      
         
       <v-btn color="black" elevation="3" @click="toggleRightDrawer">
         <v-icon>mdi-menu</v-icon> Right
@@ -88,22 +80,7 @@
       };
     },
     methods: {
-      toggleLeftDrawer() {
-        this.leftdrawer = !this.leftdrawer; 
-      },
-      toggleRightDrawer() {
-        this.rightdrawer = !this.rightdrawer; 
-      },
-      toggleFullscreen() {
-      const elem = this.$refs.basinRef;
-      if (!document.fullscreenElement) {
-        elem.requestFullscreen().catch(err => {
-          console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
-        });
-      } else {
-        document.exitFullscreen();
-      }
-    },
+      
   },
 };
   </script>
