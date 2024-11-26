@@ -1,0 +1,91 @@
+
+/* LayerSwitcher container styling */
+.layer-switcher {
+  background-color: #424242 !important;
+  color: white !important;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: 'Arial', sans-serif;
+  padding: 10px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+  width: 200px;
+}
+
+/* Button styling */
+.layer-switcher-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: #1976d2 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 101; /* Make sure it's above the LayerSwitcher */
+}
+
+.layer-switcher-btn:hover {
+  background-color: #1565c0 !important;
+}
+
+/* Panel inside LayerSwitcher */
+.layer-switcher .panel {
+  background-color: #333;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+/* Layer list styles */
+.layer-switcher ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Each layer in the list */
+.layer-switcher li.layer {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+/* Label styles (used for both text and images) */
+.layer-switcher label {
+  margin-left: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+/* Checkbox styles */
+.layer-switcher input[type="checkbox"] {
+  accent-color: #1976d2;
+  transform: scale(1.2);
+  margin-right: 5px;
+}
+
+/* Style for images (used when toggled) */
+.layer-switcher img.layer-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 4px;
+  display: none; /* Initially hide images */
+}
+
+/* Show images when 'show-images' class is active */
+.layer-switcher.show-images .layer-icon {
+  display: inline-block;
+}
+
+/* Hide text labels when 'show-images' class is active */
+.layer-switcher.show-images .layer-text {
+  display: none;
+}

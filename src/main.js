@@ -9,6 +9,8 @@ import { loadFonts } from './plugins/webfontloader';
 import * as Cesium from 'cesium';
 import 'cesium/Build/Cesium/Widgets/widgets.css'; // Import Cesium's default styles
 
+import '@/layouts/layerswitcher-custom.css';
+
 // Load fonts
 loadFonts();
 
