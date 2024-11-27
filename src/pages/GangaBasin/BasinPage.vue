@@ -14,29 +14,62 @@
 
     <v-main>
         <!-- Left Drawer -->
-        <v-navigation-drawer v-model="leftdrawer" app :clipped="true" width="200">
+        <v-navigation-drawer v-model="leftdrawer" location="left" app width="300" color="">
             <v-list>
-                <v-list-item>
-                    <v-btn class="text-start" style="width: auto;">
-                        <v-icon left>mdi-cloud</v-icon> Function 1
+                <!-- Base Maps -->
+                <v-list-item @click="toggleBaseMaps = !toggleBaseMaps">
+                    <v-btn color="#022a38" block>
+                        <v-list-item-content>
+                            <v-list-item-title>Base Maps </v-list-item-title>
+                        </v-list-item-content>
                     </v-btn>
                 </v-list-item>
-                <v-list-item>
-                    <v-btn class="text-start" style="width: auto;">
-                        <v-icon left>mdi-cloud</v-icon> Function 2
+                <v-expansion-panels v-if="toggleBaseMaps">
+                    <v-expansion-panel>
+                        <v-expansion-panel-content>
+                            <v-checkbox v-model="bing" label="Bing Map"></v-checkbox>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                    <v-expansion-panel>
+                        <v-expansion-panel-content>
+                            <v-checkbox v-model="bhuvan" label="Bhuvan Satellite Imagery"></v-checkbox>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                    <v-expansion-panel>
+                        <v-expansion-panel-content>
+                            <v-checkbox v-model="osm" label="Open Street Map"></v-checkbox>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                </v-expansion-panels>
+
+                <!-- Admin Boundary -->
+                <v-list-item @click="toggleAdminBoundary = !toggleAdminBoundary">
+                    <v-btn color="#022a38" block>
+                        <v-list-item-content>
+                            <v-list-item-title>Administrative Boundary </v-list-item-title>
+                        </v-list-item-content>
                     </v-btn>
                 </v-list-item>
-                <v-list-item>
-                    <v-btn class="text-start" style="width: auto;">
-                        <v-icon left>mdi-cloud</v-icon> Function 3
-                    </v-btn>
-                </v-list-item>
-                <v-list-item>
-                    <v-btn class="text-start" style="width: auto;">
-                        <v-icon left>mdi-cloud</v-icon> Function 4
-                    </v-btn>
-                </v-list-item>
+                <v-expansion-panels v-if="toggleAdminBoundary">
+                    <v-expansion-panel>
+                        <v-expansion-panel-content>
+                            <v-checkbox v-model="state" label="States"></v-checkbox>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                    <v-expansion-panel>
+                        <v-expansion-panel-content>
+                            <v-checkbox v-model="district" label="Districts"></v-checkbox>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                    <v-expansion-panel>
+                        <v-expansion-panel-content>
+                            <v-checkbox v-model="subdistrict" label="Sub-districts"></v-checkbox>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                </v-expansion-panels>
+
             </v-list>
+
         </v-navigation-drawer>
 
         <!-- Map -->
@@ -102,10 +135,17 @@ export default {
             rightdrawer: false,
             showSearchInput: false,
             searchQuery: '',
-            isFeatureInfoActive: false, 
+            isFeatureInfoActive: false,
             isMeasurementActive: false,
             selectedMeasurementMode: '',
-            
+            toggleBaseMaps: false,
+            bing: false,
+            bhuvan: false,
+            osm: false,
+            toggleAdminBoundary: false,
+            state: false,
+            district: false,
+            subdistrict: false,
         };
     },
     methods: {
@@ -138,5 +178,7 @@ export default {
 </script>
 
 <style scoped>
-
+.checkbox-gap {
+    margin-bottom: 4px;
+}
 </style>
