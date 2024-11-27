@@ -69,9 +69,31 @@ export default {
             }),
             visible: false,
         });
+        const basinDistrictsBoundary = new TileLayer({
+            title: 'District Boundary',
+            type: 'overlay',
+            source: new TileWMS({
+                url: 'http://192.168.17.37:8080/geoserver/Geo-Ganga/wms?',
+                params: { 'LAYERS': 'district_touch', 'TILED': true,'VERSION': '1.1.1', },
+                serverType: 'geoserver',
+                tileGrid: new TileWMS().getTileGridForProjection(getProjection('EPSG:4326')),
+            }),
+            visible: false,
+        });
+        const basinSubDistrictsBoundary = new TileLayer({
+            title: 'Sub-District Boundary',
+            type: 'overlay',
+            source: new TileWMS({
+                url: 'http://192.168.17.37:8080/geoserver/Geo-Ganga/wms?',
+                params: { 'LAYERS': 'subdistrict_touch', 'TILED': true,'VERSION': '1.1.1', },
+                serverType: 'geoserver',
+                tileGrid: new TileWMS().getTileGridForProjection(getProjection('EPSG:4326')),
+            }),
+            visible: false,
+        });
         const map = new Map({
             target: this.$refs.map,
-            layers: [bhuvanLayer, osmLayer, bingLayer, basinStatesBoundary, basinBoundary],
+            layers: [bhuvanLayer, osmLayer, bingLayer, basinSubDistrictsBoundary, basinDistrictsBoundary, basinStatesBoundary, basinBoundary],
             view: new View({ projection: 'EPSG:4326', center: [78.9629, 20.5937], zoom: 5.4,}),
         });
         // Measurement Layer

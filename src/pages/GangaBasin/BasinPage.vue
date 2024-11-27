@@ -46,7 +46,7 @@
                 <v-list-item @click="toggleAdminBoundary = !toggleAdminBoundary">
                     <v-btn color="#022a38" block>
                         <v-list-item-content>
-                            <v-list-item-title>Administrative Boundary </v-list-item-title>
+                            <v-list-item-title>Administrative Boundaries </v-list-item-title>
                         </v-list-item-content>
                     </v-btn>
                 </v-list-item>
