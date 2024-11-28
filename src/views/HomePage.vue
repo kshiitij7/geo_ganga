@@ -13,7 +13,6 @@ export default {
     data() {
         return {
             logo: require('@/assets/img/ganga_logo.png'),
-            video: require('@/assets/img/videoplayback.mp4')
         }
     }
 };

@@ -178,7 +178,5 @@ export default {
 </script>
 
 <style scoped>
-.checkbox-gap {
-    margin-bottom: 4px;
-}
+
 </style>
