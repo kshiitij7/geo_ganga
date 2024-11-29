@@ -1,6 +1,6 @@
 <template>
-<v-app-bar app color="white" dark class="button-bar" height="50" elevation="1">
-    <v-img :src="gangalogo" class="GangaLogo" max-width="200" />
+<v-app-bar app color="white" dark class="button-bar" height="60" elevation="1">
+    <v-img :src="nmcg" class="GangaLogo" max-width="200" />
 
     <v-divider :thickness="2" color="black" vertical></v-divider>
     
@@ -51,8 +51,7 @@ export default {
 
     data() {
         return {
-            gangalogo: require('@/assets/img/ganga_logo.png'),
-            menu: false
+            nmcg:require('@/assets/img/nmcgGif.gif'),     
         }
     },
 

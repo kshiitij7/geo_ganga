@@ -1,11 +1,11 @@
 <template>
-<v-main>
-    <v-container class="d-flex justify-center align-center" style="min-height: 70vh;">
-        <v-img  :src="logo"></v-img>
+    
+    <v-main class="slider-container">
+        
+        <v-img :src="logo" class="logo-image"></v-img> 
+    </v-main>
 
-    </v-container>
-</v-main>
-</template>
+  </template>
 
 <script>
 export default {
@@ -13,7 +13,23 @@ export default {
     data() {
         return {
             logo: require('@/assets/img/ganga_logo.png'),
+           
         }
     }
 };
 </script>
+
+<style scoped>
+.slider-container{
+    background-color: white;
+}
+
+.logo-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 1800px; /* Adjust size as needed */
+}
+</style>

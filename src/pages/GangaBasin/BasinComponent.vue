@@ -94,7 +94,7 @@ export default {
         const map = new Map({
             target: this.$refs.map,
             layers: [bhuvanLayer, osmLayer, bingLayer, basinSubDistrictsBoundary, basinDistrictsBoundary, basinStatesBoundary, basinBoundary],
-            view: new View({ projection: 'EPSG:4326', center: [78.9629, 20.5937], zoom: 5.4,}),
+            view: new View({ projection: 'EPSG:4326', center: [81.2989, 24.5362], zoom: 6.3, minZoom: 6.3,}),
         });
         // Measurement Layer
     this.measurementSource = new VectorSource();
