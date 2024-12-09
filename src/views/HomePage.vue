@@ -1,35 +1,37 @@
 <template>
-    
-    <v-main class="slider-container">
-        
-        <v-img :src="logo" class="logo-image"></v-img> 
-    </v-main>
-
-  </template>
-
+<v-main class="slider-container">
+    <div class="image-row">
+        <v-img :src="logo" class="logo-image"></v-img>
+        <v-img :src="nmcg" class="nmcg-image"></v-img>
+    </div>
+</v-main>
+</template> 
+  
 <script>
 export default {
     name: 'HomePage',
     data() {
         return {
             logo: require('@/assets/img/ganga_logo.png'),
-           
-        }
-    }
+            nmcg: require('@/assets/img/nmcgGif.gif'),
+        };
+    },
 };
-</script>
-
+</script> 
+  
 <style scoped>
-.slider-container{
+.slider-container {
     background-color: white;
 }
 
-.logo-image {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  width: 1800px; /* Adjust size as needed */
+.image-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nmcg-image {
+    max-width: 800px;
+    max-height: 800px;
 }
 </style>
