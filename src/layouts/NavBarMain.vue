@@ -28,9 +28,11 @@
 
     <v-divider :thickness="2" color="black" vertical></v-divider>
 
-    <v-btn :class="{'active': isActive('/tab2')}">
-        <v-icon left>mdi-heart</v-icon> Tab 2
+    <router-link to="/quality" exact-active-class="active-link">
+    <v-btn :class="{'active': isActive('/quality')}">
+        <v-icon left>mdi-water-check</v-icon> WaterQuality
     </v-btn>
+    </router-link>
 
     <v-divider :thickness="2" color="black" vertical></v-divider>
 

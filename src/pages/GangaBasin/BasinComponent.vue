@@ -96,6 +96,7 @@ export default {
             layers: [bhuvanLayer, osmLayer, bingLayer, basinSubDistrictsBoundary, basinDistrictsBoundary, basinStatesBoundary, basinBoundary],
             view: new View({ projection: 'EPSG:4326', center: [81.2989, 24.5362], zoom: 6.3, minZoom: 6.3,}),
         });
+        
         // Measurement Layer
     this.measurementSource = new VectorSource();
     this.measurementLayer = new VectorLayer({
