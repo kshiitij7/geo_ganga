@@ -1,11 +1,11 @@
 <template>
-<v-app-bar app color="white" dark class="button-bar" height="60" elevation="1">
+<v-app-bar app color="white" dark class="button-bar" height="50" elevation="1">
     <v-img :src="nmcg" class="GangaLogo" max-width="200" />
 
     <v-divider :thickness="2" color="black" vertical></v-divider>
     
     <router-link to="/" exact-active-class="active-link">
-        <v-btn :class="{'active': isActive('/')}">
+        <v-btn :class="{'active': isActive('/')}" >
             <v-icon left>mdi-home</v-icon> Home
         </v-btn>
     </router-link>
@@ -36,11 +36,11 @@
 
     <v-divider :thickness="2" color="black" vertical></v-divider>
 
-    <v-btn :class="{'active': isActive('/tab3')}">
+    <!-- <v-btn :class="{'active': isActive('/tab3')}">
         <v-icon left>mdi-star</v-icon> Tab 3
     </v-btn>
 
-    <v-divider :thickness="2" color="black" vertical></v-divider>
+    <v-divider :thickness="2" color="black" vertical></v-divider> -->
 
 </v-app-bar>
 </template>
@@ -68,7 +68,7 @@ export default {
   
 <style scoped>
 .active {
-    background-color: #77b1eb;
-    color: rgb(0, 0, 0);
+    height: 60px;   
+    color: rgb(172, 9, 9);
 }
 </style>

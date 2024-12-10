@@ -111,8 +111,8 @@
 
                     <v-title>Right Side</v-title>
                     <v-select v-model="rightSelect" :items="rightMonths" :rules="[v => !!v || 'Month is required']" label="Please Select a Layer" required></v-select>
-
-                    <v-btn :color="isBothSelected ? 'green' : 'black'">Compare</v-btn>                  
+                    <div v-if="showError" class="text-red text-caption mt-2">Please select different months.</div>
+                    <v-btn :color="isBothSelected && !showError ? 'green' : 'black'" :disabled="!isBothSelected || showError" @click="handleCompare">Compare</v-btn>                  
                 </v-navigation-drawer>
 
     </v-main>
@@ -143,8 +143,11 @@ export default {
     },
     computed: {
         isBothSelected() {
-            return this.leftSelect && this.rightSelect; // Checks if both are selected
+            return this.leftSelect && this.rightSelect; 
         },
+        showError() {
+        return this.leftSelect === this.rightSelect;
+    },
     },
     methods: {
         toggleFeatureInfo() {
@@ -166,6 +169,12 @@ export default {
         toggleCompareDrawer(){
             this.compare = !this.compare
         },
+        handleCompare() {
+        if (!this.showError) {
+            // Perform the comparison logic here
+            alert('Comparison started!');
+        }
+    },
 
     },
 };
