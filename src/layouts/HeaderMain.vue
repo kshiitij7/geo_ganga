@@ -1,5 +1,5 @@
 <template>
-<v-app-bar app color="#022a38" class="home-page-header" height="80" elevation="5">
+<v-app-bar app color="#022a38" class="home-page-header" height="80" elevation="1">
     <v-row class="fill-height" align="center" justify="space-between">
         <v-img :src="isro" contain height="65px" max-width="120" class="ml-0" />
         <v-col cols="auto" class="text-center">
