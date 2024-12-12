@@ -51,7 +51,7 @@ export default {
             title: 'Ganga Basin',
             type: 'overlay',
             source: new TileWMS({
-              url: 'http://192.168.17.37:8080/geoserver/Geo-Ganga/wms?',
+              url: 'http://localhost:8080/geoserver/Geo-Ganga/wms?',
                 params: {'LAYERS': 'Ganga_Basin_v4',  'TILED': true, 'VERSION': '1.1.1', },
                 serverType: 'geoserver',
                 tileGrid: new TileWMS().getTileGridForProjection(getProjection('EPSG:4326')),
@@ -62,7 +62,7 @@ export default {
             title: 'State Boundary',
             type: 'overlay',
             source: new TileWMS({
-                url: 'http://192.168.17.37:8080/geoserver/Geo-Ganga/wms?',
+                url: 'http://localhost:8080/geoserver/Geo-Ganga/wms?',
                 params: { 'LAYERS': 'states_boundary_ganga', 'TILED': true,'VERSION': '1.1.1', },
                 serverType: 'geoserver',
                 tileGrid: new TileWMS().getTileGridForProjection(getProjection('EPSG:4326')),
@@ -73,7 +73,7 @@ export default {
             title: 'District Boundary',
             type: 'overlay',
             source: new TileWMS({
-                url: 'http://192.168.17.37:8080/geoserver/Geo-Ganga/wms?',
+                url: 'http://localhost:8080/geoserver/Geo-Ganga/wms?',
                 params: { 'LAYERS': 'district_touch', 'TILED': true,'VERSION': '1.1.1', },
                 serverType: 'geoserver',
                 tileGrid: new TileWMS().getTileGridForProjection(getProjection('EPSG:4326')),
@@ -84,7 +84,7 @@ export default {
             title: 'Sub-District Boundary',
             type: 'overlay',
             source: new TileWMS({
-                url: 'http://192.168.17.37:8080/geoserver/Geo-Ganga/wms?',
+                url: 'http://localhost:8080/geoserver/Geo-Ganga/wms?',
                 params: { 'LAYERS': 'subdistrict_touch', 'TILED': true,'VERSION': '1.1.1', },
                 serverType: 'geoserver',
                 tileGrid: new TileWMS().getTileGridForProjection(getProjection('EPSG:4326')),
@@ -96,7 +96,7 @@ export default {
             layers: [bhuvanLayer, osmLayer, bingLayer, basinSubDistrictsBoundary, basinDistrictsBoundary, basinStatesBoundary, basinBoundary],
             view: new View({ projection: 'EPSG:4326', center: [81.2989, 24.5362], zoom: 6.3, minZoom: 6.3,}),
         });
-        
+
         // Measurement Layer
     this.measurementSource = new VectorSource();
     this.measurementLayer = new VectorLayer({
@@ -105,8 +105,10 @@ export default {
     map.addLayer(this.measurementLayer);
 
     // Listen to events from BasinPage to activate and set measurement mode
-    eventBus.on('toggle-measurement', this.toggleMeasurement);
     eventBus.on('set-measurement-mode', this.setMeasurementMode);
+    eventBus.on('clear-measurements', this.deactivateMeasurement);
+    eventBus.on('clear-measurements', this.clearMeasurements);
+
         // LayerSwitcher
         const layerSwitcher = new LayerSwitcher({
             activationMode: 'click',
@@ -117,6 +119,7 @@ export default {
             showRoot: false,
         });
         map.addControl(layerSwitcher);
+
         // FullScreen 
         const fullScreenControl = new FullScreen({
             tipLabel: 'Fullscreen',
@@ -126,56 +129,42 @@ export default {
         this.map = map; // Store map instance
     },
     methods: {
-    toggleMeasurement(isActive) {
-      if (isActive) {
-        // Default to "Length" when activated
-        this.setMeasurementMode('Length');
-      } else {
-        // Deactivate the measurement tool
-        this.deactivateMeasurement();
-      }
-    },
-
     setMeasurementMode(mode) {
+      this.deactivateMeasurement();
       this.measurementMode = mode;
-      if (mode) {
-        this.activateMeasurement(mode);
-      }
-    },
+      this.activateMeasurement(mode);
+      },
 
     activateMeasurement(mode) {
-      // Remove any existing draw interaction
-      if (this.draw) {
-        this.map.removeInteraction(this.draw);
-      }
-
       const type = mode === 'Length' ? 'LineString' : 'Polygon';
-
       // Create the drawing interaction
-      this.draw = new Draw({
+      this.drawInteraction = new Draw({
         source: this.measurementSource,
         type: type,
       });
 
       // Add interaction to the map
-      this.map.addInteraction(this.draw);
+      this.map.addInteraction(this.drawInteraction);
 
       // Add Modify Interaction to enable feature modification
-      this.modify = new Modify({
+      this.modifyInteraction = new Modify({
         source: this.measurementSource,
       });
-      this.map.addInteraction(this.modify);
+      this.map.addInteraction(this.modifyInteraction);
     },
 
     deactivateMeasurement() {
-      if (this.draw) {
-        this.map.removeInteraction(this.draw);
+      if (this.drawInteraction) {
+        this.map.removeInteraction(this.drawInteraction);
       }
-      if (this.modify) {
-        this.map.removeInteraction(this.modify);
+      if (this.modifyInteraction) {
+        this.map.removeInteraction(this.modifyInteraction);
       }
-      this.measurementSource.clear(); // Clear the measurement features
     },
+       clearMeasurements(){
+        this.measurementSource.clear();
+       },
+    
   },
 };
 </script>

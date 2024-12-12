@@ -48,7 +48,7 @@
                     </v-menu>
 
                     <!-- FeatureInfo Button -->
-                <v-list-item :style="{ color: isFeatureInfoActive ? 'green' : '' }" @click="toggleFeatureInfo">
+                <v-list-item @click="toggleFeatureInfoBox" ref="infoButton">
                     <v-list-item-title>
                         <v-tooltip location="right">
                             <template v-slot:activator="{ props: tooltip }">
@@ -58,6 +58,15 @@
                     </v-tooltip>
                     </v-list-item-title>
                 </v-list-item>
+                <v-menu v-model="isInfoBoxOpen" :close-on-content-click="false" :activator="infoActivator" offset-y max-width="300">
+                    <v-card>
+                        <v-card-title><span class="text-h6">Feature Info Tool</span></v-card-title>
+                        <v-divider></v-divider>
+                        <v-card-text><v-switch color="blue" label="Enable Feature Info"></v-switch>
+                        </v-card-text>
+                    </v-card>
+
+                </v-menu>
 
                     <!-- Measure Button -->
                 <v-list-item @click="toggleMeasurementBox" ref="measureButton">
@@ -73,12 +82,13 @@
                 <v-menu v-model="isMeasurementBoxOpen" :close-on-content-click="false" :activator="measureActivator" offset-y max-width="300">
                     <v-card>
                         <v-card-title><span class="text-h6">Measurement Tool</span> </v-card-title>
+                        <v-divider></v-divider>
                         <v-card-text>
                             <v-container class="icon-container" justify="center">
                                 <v-row justify="center">
-                                    <v-col cols="4" class="text-center"><v-btn prepend-icon="mdi-pulse" stacked>Length</v-btn></v-col>
-                                    <v-col cols="4" class="text-center"><v-btn prepend-icon="mdi-pentagon-outline" stacked>Area</v-btn></v-col>
-                                    <v-col cols="4" class="text-center"><v-btn color="#700B0B" prepend-icon="mdi-delete" stacked>Clear</v-btn></v-col>
+                                    <v-col cols="4" class="text-center"><v-btn prepend-icon="mdi-pulse" stacked @click="activateMeasurement('Length')">Length</v-btn></v-col>
+                                    <v-col cols="4" class="text-center"><v-btn prepend-icon="mdi-pentagon-outline" stacked @click="activateMeasurement('Area')">Area</v-btn></v-col>
+                                    <v-col cols="4" class="text-center"><v-btn color="#700B0B" prepend-icon="mdi-delete" stacked @click="clearMeasurements">Clear</v-btn></v-col>
                                 </v-row>
                             </v-container>
                         </v-card-text>
@@ -130,7 +140,8 @@ export default {
     },
     data() {
         return {
-            isFeatureInfoActive: false,
+            isInfoBoxOpen:false,
+            infoActivator: null,
             isMeasurementBoxOpen: false,
             measureActivator: null,
             searchActivator: null,
@@ -150,18 +161,30 @@ export default {
     },
     },
     methods: {
-        toggleFeatureInfo() {
-            this.isFeatureInfoActive = !this.isFeatureInfoActive;
-            eventBus.emit('toggle-feature-info', this.isFeatureInfoActive);
+        toggleFeatureInfoBox() {
+            if (!this.infoActivator) {
+                this.infoActivator = this.$refs.infoButton;
+            }
+            this.isInfoBoxOpen = !this.isInfoBoxOpen;
+
+
         },
         toggleMeasurementBox() {
-            if (!this.activator) {
+            if (!this.measureActivator) {
                 this.measureActivator = this.$refs.measureButton;
             }
             this.isMeasurementBoxOpen = !this.isMeasurementBoxOpen;
+            eventBus.emit('toggle-measurement', this.isMeasurementBoxOpen);
+        },
+        
+        activateMeasurement(type){
+            eventBus.emit('set-measurement-mode',type);
+        },
+        clearMeasurements(){
+            eventBus.emit('clear-measurements');
         },
         toggleSearchBox() {
-            if (!this.activator) {
+            if (!this.searchActivator) {
                 this.searchActivator = this.$refs.searchButton;
             }
             this.isSearchBoxOpen = !this.isSearchBoxOpen;
@@ -171,7 +194,6 @@ export default {
         },
         handleCompare() {
         if (!this.showError) {
-            // Perform the comparison logic here
             alert('Comparison started!');
         }
     },
