@@ -1,20 +1,46 @@
 <template>
 <div class="Basin">
     <v-main>
+        <!-- Left Side Bar -->
         <v-navigation-drawer rail app color="black">
             <v-list>
+                <!-- Layer Button -->
                 <v-list-item>
-                    <v-list-item-title>
-                        <v-icon>mdi-layers </v-icon>
+                    <v-list-item-title @click="toggleLayersDrawer" class="cursor-pointer">
+                        <v-tooltip location="left">
+                            <template v-slot:activator="{ props: tooltip}">
+                        <v-icon v-bind="tooltip">mdi-layers </v-icon>
+                    </template>
+                    <span>Layers</span>
+                    </v-tooltip>
                     </v-list-item-title>
                 </v-list-item>
+
+                <!-- Time Series Button -->
                 <v-list-item>
-                    <v-list-item-title>
-                        <v-icon>mdi mdi-chart-timeline</v-icon>
+                    <v-list-item-title @click="toggleTimeSeriesDrawer" class="cursor-pointer">
+                        <v-tooltip location="left">
+                            <template v-slot:activator="{ props: tooltip}">
+                        <v-icon v-bind="tooltip">mdi mdi-chart-timeline</v-icon>
+                    </template>
+                    <span>Time Series</span>
+                    </v-tooltip>
                     </v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
+
+<!-- Layers Drawer -->
+<v-navigation-drawer v-model="layers" location="left" :width=300>
+                    <v-list-item><div class="text-h5 font-weight-bold" style="text-align: center;">Layer Switcher</div></v-list-item>
+                    <v-divider :thickness="2" color="black"></v-divider>                
+   </v-navigation-drawer>
+
+   <!-- Time Series Drawer -->
+   <v-navigation-drawer v-model="timeSeries" location="left" :width=300>
+                    <v-list-item><div class="text-h5 font-weight-bold" style="text-align: center;">Time Series Data</div></v-list-item>
+                    <v-divider :thickness="2" color="black"></v-divider>                
+   </v-navigation-drawer>
 
         <!-- Map -->
         <div ref="basinRef" style="width: 100%; height: 100vh;">
@@ -23,6 +49,7 @@
 
         <v-navigation-drawer rail app location="right" color="black">
             <v-list>
+                
                 <!-- Search Button -->
                 <v-list-item @click="toggleSearchBox" ref="searchButton">
                     <v-list-item-title>
@@ -47,6 +74,8 @@
                     </v-card>
                     </v-menu>
 
+                    <v-divider :thickness="2" color="white"></v-divider>
+
                     <!-- FeatureInfo Button -->
                 <v-list-item @click="toggleFeatureInfoBox" ref="infoButton">
                     <v-list-item-title>
@@ -62,11 +91,11 @@
                     <v-card>
                         <v-card-title><span class="text-h6">Feature Info Tool</span></v-card-title>
                         <v-divider></v-divider>
-                        <v-card-text><v-switch color="blue" label="Enable Feature Info"></v-switch>
-                        </v-card-text>
+                        <v-card-text><v-switch color="blue" label="Enable Feature Info"></v-switch></v-card-text>
                     </v-card>
-
                 </v-menu>
+
+                <v-divider :thickness="2" color="white"></v-divider>
 
                     <!-- Measure Button -->
                 <v-list-item @click="toggleMeasurementBox" ref="measureButton">
@@ -95,6 +124,8 @@
                     </v-card>
                 </v-menu>
 
+                <v-divider :thickness="2" color="white"></v-divider>
+
                 <!-- Compare Button -->
                 <v-list-item >
                     <v-list-item-title @click="toggleCompareDrawer" class="cursor-pointer">
@@ -107,19 +138,21 @@
                     </v-list-item-title>
                 </v-list-item>
 
+
+                <v-divider :thickness="2" color="white"></v-divider>
             </v-list>
+          
         </v-navigation-drawer>
+
+
 
         <!-- Compare Drawer -->
         <v-navigation-drawer v-model="compare" location="right" :width="300">
-                    <v-list-item><div class="text-h4 font-weight-bold">Comparison Tool</div></v-list-item>
-
-                    <v-divider :thickness="5" color="black"></v-divider> 
-
-                    <v-title>Left Side</v-title>
+                    <v-list-item><div class="text-h5 font-weight-bold" style="text-align: center;">Comparison Tool</div></v-list-item>
+                    <v-divider :thickness="2" color="black"></v-divider> 
+                    <v-title><div class="text-h6 font-weight-bold" style="margin-top: 20px; margin-left: 20px;">Left Side</div></v-title>
                     <v-select v-model="leftSelect" :items="leftMonths" :rules="[v => !!v || 'Month is required']" label="Please Select a Layer" required></v-select>
-
-                    <v-title>Right Side</v-title>
+                    <v-title><div class="text-h6 font-weight-bold" style="margin-top: 20px; margin-left: 20px;">Right Side</div></v-title>
                     <v-select v-model="rightSelect" :items="rightMonths" :rules="[v => !!v || 'Month is required']" label="Please Select a Layer" required></v-select>
                     <div v-if="showError" class="text-red text-caption mt-2">Please select different months.</div>
                     <v-btn :color="isBothSelected && !showError ? 'green' : 'black'" :disabled="!isBothSelected || showError" @click="handleCompare">Compare</v-btn>                  
@@ -140,6 +173,8 @@ export default {
     },
     data() {
         return {
+            layers:false,
+            timeSeries:false,
             isInfoBoxOpen:false,
             infoActivator: null,
             isMeasurementBoxOpen: false,
@@ -161,13 +196,17 @@ export default {
     },
     },
     methods: {
+        toggleLayersDrawer(){
+            this.layers= !this.layers
+        },
+        toggleTimeSeriesDrawer(){
+            this.timeSeries = !this.timeSeries
+        },
         toggleFeatureInfoBox() {
             if (!this.infoActivator) {
                 this.infoActivator = this.$refs.infoButton;
             }
             this.isInfoBoxOpen = !this.isInfoBoxOpen;
-
-
         },
         toggleMeasurementBox() {
             if (!this.measureActivator) {

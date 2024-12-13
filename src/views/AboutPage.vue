@@ -5,7 +5,7 @@
 
     <v-row style="margin-left: 40px; margin-right: 40px; margin-top: 20px;">   
         <v-col>
-        <p style="font-size: 18px; text-align: justify;">The Geo-Ganga portal is an innovative digital platform
+        <p style="font-size: 18px; text-align: justify; font-family: 'Poppins', sans-serif; font-weight: 300;">The Geo-Ganga portal is an innovative digital platform
             to support the initiatives for the rejuvenation and conservation of the Ganga River and its basin.
             This portal provides geospatial data, satellite imagery, and mapping tools that are essential
             for effective monitoring, management, and decision-making related to the Ganga's ecosystem.
@@ -102,6 +102,8 @@ export default {
 
 <style scoped>
 .heading {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
     font-size: 50px;
     text-decoration: underline;
     text-align: center;
@@ -116,5 +118,7 @@ export default {
 .about-text {
     padding: 20px;
     font-size: 1.1rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
 }
 </style>

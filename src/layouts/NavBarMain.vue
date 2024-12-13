@@ -8,7 +8,7 @@
     
     <router-link to="/">
         <v-btn :class="{'active': isActive('/')}" >
-            <v-icon left>mdi-home</v-icon> Home
+            <v-icon left>mdi-home</v-icon> <div style="font-family: 'Poppins', sans-serif; font-weight: 200;">Home</div>
         </v-btn>
     </router-link>
 
@@ -24,7 +24,7 @@
 
     <router-link to="/basin">
         <v-btn :class="{'active': isActive('/basin')}">
-            <v-icon left>mdi-leaf</v-icon> GangaBasin
+            <v-icon left>mdi-leaf</v-icon><div style="font-family: 'Poppins', sans-serif; font-weight: 200;">Ganga Basin</div>
         </v-btn>
     </router-link>
 
@@ -32,18 +32,18 @@
 
     <router-link to="/quality">
     <v-btn :class="{'active': isActive('/quality')}">
-        <v-icon left>mdi-water-check</v-icon> WaterQuality
+        <v-icon left>mdi-water-check</v-icon><div style="font-family: 'Poppins', sans-serif; font-weight: 200;">Water Quality</div>
     </v-btn>
     </router-link>
 
     <v-divider :thickness="1" color="black" vertical></v-divider>
 
     <v-btn :class="{'active': isActive('/tab3')}">
-        <v-icon left>mdi-star</v-icon> Tab 3
+        <v-icon left>mdi-star</v-icon><div style="font-family: 'Poppins', sans-serif; font-weight: 200;"> Tab 3</div>
     </v-btn>
     <v-divider :thickness="1" color="black" vertical></v-divider>
     <v-btn :class="{'active': isActive('/tab3')}">
-        <v-icon left>mdi-cloud</v-icon> Tab 4
+        <v-icon left>mdi-cloud</v-icon><div style="font-family: 'Poppins', sans-serif; font-weight: 200;"> Tab 4</div>
     </v-btn>
     <v-divider :thickness="1" color="black" vertical></v-divider>
 

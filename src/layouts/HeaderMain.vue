@@ -12,8 +12,6 @@
         <v-img :src="india" contain height="65px" max-width="140" class="mr-0" />
     </v-row>
 </v-app-bar>
-
-
 </template>
 
 <script>
@@ -31,5 +29,7 @@ export default {
 .header-text {
     color: wheat;
     line-height: 1.2;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
 }
 </style>
