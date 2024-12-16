@@ -3,8 +3,7 @@
 
     <HeaderMain/>
     <NavBarMain/>
-            
-   
+    
     <router-view/>
   
   </v-app>

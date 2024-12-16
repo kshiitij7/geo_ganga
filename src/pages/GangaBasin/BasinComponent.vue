@@ -1,6 +1,6 @@
 <template>
 <div ref="map" class="map"></div>
-
+  
 </template>
 
 <script>
@@ -19,6 +19,7 @@ import { Draw, Modify } from 'ol/interaction';
 import { Vector as VectorSource } from 'ol/source';
 import { Vector as VectorLayer } from 'ol/layer';
 import eventBus from '@/event-bus';
+
 
 export default {
     name: 'BasinComponent',

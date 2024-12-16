@@ -16,7 +16,7 @@
 
     <router-link to="/about">
         <v-btn :class="{'active': isActive('/about')}">
-            <v-icon left>mdi-information</v-icon> About
+            <v-icon left>mdi-information</v-icon> <div style="font-family: 'Poppins', sans-serif; font-weight: 200;">About</div>
         </v-btn>
     </router-link>
 

@@ -21,6 +21,7 @@
     "shp-write": "^0.3.2",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
+    "vue-slider-component": "^3.2.24",
     "vuetify": "^3.7.4",
     "vuex": "^4.0.0",
     "webfontloader": "^1.0.0"
