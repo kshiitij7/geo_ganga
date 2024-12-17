@@ -6,7 +6,8 @@ import vuetify from './plugins/vuetify';
 import { loadFonts } from './plugins/webfontloader';
 
 
-import '@/layouts/layerswitcher-custom.css';
+
+
 
 loadFonts();
 

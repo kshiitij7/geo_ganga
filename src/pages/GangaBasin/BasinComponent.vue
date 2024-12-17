@@ -19,6 +19,7 @@ import { Draw, Modify } from 'ol/interaction';
 import { Vector as VectorSource } from 'ol/source';
 import { Vector as VectorLayer } from 'ol/layer';
 import eventBus from '@/event-bus';
+import {ScaleLine, defaults as defaultControls} from 'ol/control.js';
 
 
 export default {
@@ -92,10 +93,14 @@ export default {
             }),
             visible: false,
         });
+
+        const scaleControl = new ScaleLine({ units: 'metric',bar: true,steps: 4,text: true, minWidth: 140,});
+
         const map = new Map({
+            controls: defaultControls().extend([scaleControl]),
             target: this.$refs.map,
             layers: [bhuvanLayer, osmLayer, bingLayer, basinSubDistrictsBoundary, basinDistrictsBoundary, basinStatesBoundary, basinBoundary],
-            view: new View({ projection: 'EPSG:4326', center: [81.2989, 24.5362], zoom: 6.3, minZoom: 6.3,}),
+            view: new View({ projection: 'EPSG:4326', center: [82.0662, 26.2648], zoom: 6.5, minZoom: 6.5,}),
         });
 
         // Measurement Layer
@@ -176,6 +181,6 @@ export default {
 .map {
     width: 100%;
     height: 100%;
-    z-index: 1000;
+    
 }
 </style>
