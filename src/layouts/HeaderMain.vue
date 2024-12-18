@@ -31,5 +31,7 @@ export default {
     line-height: 1.2;
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
+    
+    
 }
 </style>

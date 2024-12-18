@@ -18,9 +18,11 @@ import FullScreen from 'ol/control/FullScreen';
 import { Draw, Modify } from 'ol/interaction';
 import { Vector as VectorSource } from 'ol/source';
 import { Vector as VectorLayer } from 'ol/layer';
+
 import eventBus from '@/event-bus';
 import {ScaleLine, defaults as defaultControls} from 'ol/control.js';
-
+// import { fromLonLat } from 'ol/proj';
+// import { getLength, getArea } from 'ol/sphere';
 
 export default {
     name: 'BasinComponent',
@@ -100,15 +102,14 @@ export default {
             controls: defaultControls().extend([scaleControl]),
             target: this.$refs.map,
             layers: [bhuvanLayer, osmLayer, bingLayer, basinSubDistrictsBoundary, basinDistrictsBoundary, basinStatesBoundary, basinBoundary],
-            view: new View({ projection: 'EPSG:4326', center: [82.0662, 26.2648], zoom: 6.5, minZoom: 6.5,}),
+            view: new View({ projection: 'EPSG:4326', center:[82.0662, 26.2648], zoom: 6.5, minZoom: 6.5,}),
         });
 
         // Measurement Layer
     this.measurementSource = new VectorSource();
     this.measurementLayer = new VectorLayer({
       source: this.measurementSource,
-      style: {'fill-color': 'rgba(255, 255, 255, 0.2)', 'stroke-color': '#ffcc33', 'stroke-width': 2, 'circle-radius': 7, 'circle-fill-color': '#ffcc33',
-  },
+      style: {'fill-color': 'rgba(255, 58, 51, 0.25)', 'stroke-color': 'yellow', 'stroke-width': 2, },
     });
     map.addLayer(this.measurementLayer);
 
@@ -118,31 +119,23 @@ export default {
     eventBus.on('clear-measurements', this.clearMeasurements);
 
         // LayerSwitcher
-        const layerSwitcher = new LayerSwitcher({
-            activationMode: 'click',
-            startActive: false,
-            tipLabel: 'Layers',
-            collapseLabel: '\u00BB',
-            expandLabel: '\u00AB',
-            showRoot: false,
-        });
+        const layerSwitcher = new LayerSwitcher({activationMode: 'click',startActive: false,tipLabel: 'Layers',collapseLabel: '\u00BB',expandLabel: '\u00AB',showRoot: false,});
         map.addControl(layerSwitcher);
 
         // FullScreen 
-        const fullScreenControl = new FullScreen({
-            tipLabel: 'Fullscreen',
-        });
+        const fullScreenControl = new FullScreen({ tipLabel: 'Fullscreen',  });
         map.addControl(fullScreenControl);
 
         this.map = map; // Store map instance
     },
+
     methods: {
+
     setMeasurementMode(mode) {
       this.deactivateMeasurement();
       this.measurementMode = mode;
       this.activateMeasurement(mode);
       },
-
     activateMeasurement(mode) {
       const type = mode === 'Length' ? 'LineString' : 'Polygon';
       // Create the drawing interaction
@@ -150,10 +143,8 @@ export default {
         source: this.measurementSource,
         type: type,
       });
-
       // Add interaction to the map
       this.map.addInteraction(this.drawInteraction);
-
       // Add Modify Interaction to enable feature modification
       this.modifyInteraction = new Modify({
         source: this.measurementSource,
@@ -172,7 +163,6 @@ export default {
        clearMeasurements(){
         this.measurementSource.clear();
        },
-    
   },
 };
 </script>
@@ -180,7 +170,6 @@ export default {
 <style scoped>
 .map {
     width: 100%;
-    height: 100%;
-    
+    height: 100%;  
 }
 </style>

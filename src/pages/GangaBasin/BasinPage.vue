@@ -38,11 +38,11 @@
                 <v-title>
                     <div class="text-h7 font-weight-bold" style="margin-top: 20px; margin-left: 20px;">Base Maps</div>
                 </v-title>
-                <v-select v-model="baseMaps" :items="baseMapsLayers" label="Please Select a Layer" required></v-select>
+                <v-select v-model="baseMaps" :items="baseMapsLayers" label="Please Select a Map" required></v-select>
                 <v-title>
                     <div class="text-h7 font-weight-bold" style="margin-top: 20px; margin-left: 20px;">Administrative Boundaries</div>
                 </v-title>
-                <v-select style="margin-bottom: 50px;" chips multiple v-model="adminBoundary" :items="adminBoundaryLayers" label="Please Select a Layer" required></v-select>
+                <v-select style="margin-bottom: 50px;" chips multiple clearable v-model="adminBoundary" :items="adminBoundaryLayers" label="Please Select a Layer" required></v-select>
                 <v-divider :thickness="3"></v-divider>
             </template>
 
@@ -124,10 +124,11 @@
                     </v-card-title>
                     <v-divider :thickness="2" color="black"></v-divider>
                     <v-card-text>
-                        <v-text-field clearable placeholder="Type to Search ..." outlined></v-text-field>
+                        <v-text-field style="margin-top: 20px; margin-bottom: 30px;" clearable placeholder="Type to Search ..." outlined></v-text-field>
                     </v-card-text>
                 </v-card>
                 <v-divider :thickness="3"></v-divider>
+                <v-img src="../GangaBasin/rightPng/search_button.png" style="margin-top: 100px;opacity: 0.8;" contain alt="Comparison Tool Image"></v-img>
             </div>
 
             <div v-else-if="activeTool === 'featureInfo'">
@@ -143,7 +144,7 @@
                     </v-card-text>
                 </v-card>
                 <v-divider :thickness="3"></v-divider>
-                <v-img src="../GangaBasin/feature_tool.png" style="margin-top: 70px;opacity: 0.6;" contain alt="Comparison Tool Image"></v-img>
+                <v-img src="../GangaBasin/rightPng/feature_tool.png" style="margin-top: 70px;opacity: 0.6;" contain alt="Comparison Tool Image"></v-img>
             </div>
 
             <div v-else-if="activeTool === 'measurement'">
@@ -169,7 +170,7 @@
                     </v-card-text>
                 </v-card>
                 <v-divider :thickness="3"></v-divider>
-                <v-img src="../GangaBasin/measure_tool.png" style="margin-top: 50px;opacity: 0.6;" contain alt="Comparison Tool Image"></v-img>
+                <v-img src="../GangaBasin/rightPng/measure_tool.png" style="margin-top: 50px;opacity: 0.6;" contain alt="Comparison Tool Image"></v-img>
             </div>
 
             <div v-else-if="activeTool === 'compare'">
@@ -192,7 +193,7 @@
                     </v-card-text>
                 </v-card>
                 <v-divider :thickness="3"></v-divider>
-                <v-img src="../GangaBasin/CompareTool.svg" style="margin-top: 120px;" max-height="300" contain alt="Comparison Tool Image"></v-img>
+                <v-img src="../GangaBasin/rightPng/CompareTool.svg" style="margin-top: 120px;" max-height="300" contain alt="Comparison Tool Image"></v-img>
             </div>
         </v-navigation-drawer>
 
