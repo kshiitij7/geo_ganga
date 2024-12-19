@@ -212,7 +212,7 @@ export default {
             const geometry = feature.getGeometry();
             if (mode === 'Length') {
                 const length = getLength(geometry);
-                alert(`Length: ${length*100000} meters`);
+                alert(`Length: ${length*100} km`);
             } else if (mode === 'Area') {
                 const area = getArea(geometry);
                 alert(`Area: ${area*1000} km²`);
