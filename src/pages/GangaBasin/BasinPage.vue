@@ -124,7 +124,7 @@
                     </v-card-title>
                     <v-divider :thickness="2" color="black"></v-divider>
                     <v-card-text>
-                        <v-text-field style="margin-top: 20px; margin-bottom: 30px;" clearable placeholder="Type to Search ..." outlined></v-text-field>
+                        <v-text-field v-model="searchQuery" @searchInput="onSearchInput" style="margin-top: 20px; margin-bottom: 30px;" clearable placeholder="Type to Search ..." outlined></v-text-field>
                     </v-card-text>
                 </v-card>
                 <v-divider :thickness="3"></v-divider>
@@ -212,7 +212,7 @@ export default {
     },
     data() {
         return {
-            // Left
+            // Left 
             isLeftDrawerOpen: false,
             activeLeftTab: null,
             baseMaps: null,
@@ -222,9 +222,10 @@ export default {
             adminBoundaryLayers: ['India Boundary','Ganga Basin', 'State Boundary', 'District Boundary', 'Sub-District Boundary'],
             timeSeriesLayers: ['Evapotranspiration', 'Precipitation', 'Temperature'],
 
-            // Right
+            // Right 
             isRightDrawerOpen: false,
             activeTool: null,
+            searchQuery: '',
             activeMeasurement: null,
             leftSelect: null,
             rightSelect: null,
