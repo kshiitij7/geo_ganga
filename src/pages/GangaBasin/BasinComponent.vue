@@ -55,7 +55,7 @@ export default {
             title: 'India Boundary',
             type: 'overlay',
             source: new TileWMS({
-              url: 'http://localhost:8080/geoserver/Geo-Ganga/wms?',
+              url: 'http://192.168.17.37:8080/geoserver/Geo-Ganga/wms?',
                 params: {'LAYERS': 'india_country_boundary_4326',  'TILED': true, 'VERSION': '1.1.1', },
                 serverType: 'geoserver',
                 tileGrid: new TileWMS().getTileGridForProjection(getProjection('EPSG:4326')),
@@ -66,7 +66,7 @@ export default {
             title: 'Ganga Basin',
             type: 'overlay',
             source: new TileWMS({
-              url: 'http://localhost:8080/geoserver/Geo-Ganga/wms?',
+              url: 'http://192.168.17.37:8080/geoserver/Geo-Ganga/wms?',
                 params: {'LAYERS': 'Ganga_Basin_v4',  'TILED': true, 'VERSION': '1.1.1', },
                 serverType: 'geoserver',
                 tileGrid: new TileWMS().getTileGridForProjection(getProjection('EPSG:4326')),
@@ -77,7 +77,7 @@ export default {
             title: 'State Boundary',
             type: 'overlay',
             source: new TileWMS({
-                url: 'http://localhost:8080/geoserver/Geo-Ganga/wms?',
+                url: 'http://192.168.17.37:8080/geoserver/Geo-Ganga/wms?',
                 params: { 'LAYERS': 'states_boundary_ganga', 'TILED': true,'VERSION': '1.1.1', },
                 serverType: 'geoserver',
                 tileGrid: new TileWMS().getTileGridForProjection(getProjection('EPSG:4326')),
@@ -88,7 +88,7 @@ export default {
             title: 'District Boundary',
             type: 'overlay',
             source: new TileWMS({
-                url: 'http://localhost:8080/geoserver/Geo-Ganga/wms?',
+                url: 'http://192.168.17.37:8080/geoserver/Geo-Ganga/wms?',
                 params: { 'LAYERS': 'district_touch', 'TILED': true,'VERSION': '1.1.1', },
                 serverType: 'geoserver',
                 tileGrid: new TileWMS().getTileGridForProjection(getProjection('EPSG:4326')),
@@ -99,7 +99,7 @@ export default {
             title: 'Sub-District Boundary',
             type: 'overlay',
             source: new TileWMS({
-                url: 'http://localhost:8080/geoserver/Geo-Ganga/wms?',
+                url: 'http://192.168.17.37:8080/geoserver/Geo-Ganga/wms?',
                 params: { 'LAYERS': 'subdistrict_touch', 'TILED': true,'VERSION': '1.1.1', },
                 serverType: 'geoserver',
                 tileGrid: new TileWMS().getTileGridForProjection(getProjection('EPSG:4326')),
