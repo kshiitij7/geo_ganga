@@ -250,14 +250,12 @@ export default {
                 this.activeLeftTab = leftTab;
                 this.isLeftDrawerOpen = true;
             }
-            // this.activeLeftTab = leftTab;
-            // this.isLeftDrawerOpen = !this.isLeftDrawerOpen;
         },
         openRightDrawer(tool) {
-            if (this.activeTool === tool && this.isRightDrawerOpen) { // Close the drawer if the same tool button is clicked again
+            if (this.activeTool === tool && this.isRightDrawerOpen) { 
                 this.isRightDrawerOpen = false;
                 this.activeTool = null;
-            } else { // Open the drawer with the selected tool
+            } else { 
                 this.activeTool = tool;
                 this.isRightDrawerOpen = true;
             }
