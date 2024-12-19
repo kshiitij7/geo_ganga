@@ -32,15 +32,15 @@
             <!-- Layers Content -->
             <template v-if="activeLeftTab === 'layers'">
                 <v-list-item>
-                    <div class="text-h6 font-weight-bold" style="text-align: center;">Layer Switcher</div>
+                    <div class="text-h5" style="font-family: 'Poppins', sans-serif; font-weight:500; text-align: center;">Layer Switcher</div>
                 </v-list-item>
                 <v-divider :thickness="2" color="black"></v-divider>
                 <v-title>
-                    <div class="text-h7 font-weight-bold" style="margin-top: 20px; margin-left: 20px;">Base Maps</div>
+                    <div class="text-h7" style="font-family: 'Poppins', sans-serif; font-weight:500; margin-top: 20px; margin-left: 20px;">Base Maps</div>
                 </v-title>
                 <v-select v-model="baseMaps" :items="baseMapsLayers" label="Please Select a Map" required></v-select>
                 <v-title>
-                    <div class="text-h7 font-weight-bold" style="margin-top: 20px; margin-left: 20px;">Administrative Boundaries</div>
+                    <div class="text-h7" style="font-family: 'Poppins', sans-serif; font-weight:500; margin-top: 20px; margin-left: 20px;">Administrative Boundaries</div>
                 </v-title>
                 <v-select style="margin-bottom: 50px;" chips multiple clearable v-model="adminBoundary" :items="adminBoundaryLayers" label="Please Select a Layer" required></v-select>
                 <v-divider :thickness="3"></v-divider>
@@ -49,7 +49,7 @@
             <!-- Time Series Content -->
             <template v-if="activeLeftTab === 'timeSeries'">
                 <v-list-item>
-                    <div class="text-h6 font-weight-bold" style="text-align: center;">Time Series Data</div>
+                    <div class="text-h5" style="font-family: 'Poppins', sans-serif; font-weight:500; text-align: center;">Time Series Data</div>
                 </v-list-item>
                 <v-divider :thickness="2" color="black"></v-divider>
                 <v-select style="margin-top: 40px; margin-bottom: 30px;" v-model="timeSeries" :items="timeSeriesLayers" label="Please Select an Option" required></v-select>
@@ -120,7 +120,7 @@
             <div v-if="activeTool === 'search'">
                 <v-card elevation="0">
                     <v-card-title>
-                        <div class="text-h6 font-weight-bold" style="text-align: center;">Search for a place</div>
+                        <div class="text-h5" style="font-family: 'Poppins', sans-serif; font-weight:500; text-align: center;">Search for a place</div>
                     </v-card-title>
                     <v-divider :thickness="2" color="black"></v-divider>
                     <v-card-text>
@@ -128,13 +128,13 @@
                     </v-card-text>
                 </v-card>
                 <v-divider :thickness="3"></v-divider>
-                <v-img src="../GangaBasin/rightPng/search_button.png" style="margin-top: 100px;opacity: 0.8;" contain alt="Comparison Tool Image"></v-img>
+                <v-img src="../GangaBasin/rightPng/search_button.png" style="margin-top: 100px; opacity: 0.8;" contain alt="Comparison Tool Image"></v-img>
             </div>
 
             <div v-else-if="activeTool === 'featureInfo'">
                 <v-card elevation="0">
                     <v-card-title>
-                        <div class="text-h6 font-weight-bold" style="text-align: center;">Feature Info Tool</div>
+                        <div class="text-h5" style="font-family: 'Poppins', sans-serif; font-weight:500; text-align: center;">Feature Info Tool</div>
                     </v-card-title>
                     <v-divider :thickness="2" color="black"></v-divider>
                     <v-card-text>
@@ -144,13 +144,13 @@
                     </v-card-text>
                 </v-card>
                 <v-divider :thickness="3"></v-divider>
-                <v-img src="../GangaBasin/rightPng/feature_tool.png" style="margin-top: 70px;opacity: 0.6;" contain alt="Comparison Tool Image"></v-img>
+                <v-img src="../GangaBasin/rightPng/feature_tool.png" style="margin-top: 70px;opacity: 0.8;" contain alt="Comparison Tool Image"></v-img>
             </div>
 
             <div v-else-if="activeTool === 'measurement'">
                 <v-card elevation="0">
                     <v-card-title>
-                        <div class="text-h6 font-weight-bold" style="text-align: center;">Measurement Tool</div>
+                        <div class="text-h5" style="font-family: 'Poppins', sans-serif; font-weight:500; text-align: center;">Measurement Tool</div>
                     </v-card-title>
                     <v-divider :thickness="2" color="black"></v-divider>
                     <v-card-text style="margin-bottom: 30px; margin-top: 10px;">
@@ -170,13 +170,13 @@
                     </v-card-text>
                 </v-card>
                 <v-divider :thickness="3"></v-divider>
-                <v-img src="../GangaBasin/rightPng/measure_tool.png" style="margin-top: 50px;opacity: 0.6;" contain alt="Comparison Tool Image"></v-img>
+                <v-img src="../GangaBasin/rightPng/measure_tool.png" style="margin-top: 50px;opacity: 0.8;" contain alt="Comparison Tool Image"></v-img>
             </div>
 
             <div v-else-if="activeTool === 'compare'">
                 <v-card elevation="0">
                     <v-card-title>
-                        <div class="text-h6 font-weight-bold" style="text-align: center;">Comparison Tool</div>
+                        <div  class="text-h5" style="font-family: 'Poppins', sans-serif; font-weight:500; text-align: center;">Comparison Tool</div>
                     </v-card-title>
                     <v-divider :thickness="2" color="black"></v-divider>
                     <v-card-text>
@@ -193,7 +193,7 @@
                     </v-card-text>
                 </v-card>
                 <v-divider :thickness="3"></v-divider>
-                <v-img src="../GangaBasin/rightPng/CompareTool.svg" style="margin-top: 120px;" max-height="300" contain alt="Comparison Tool Image"></v-img>
+                <v-img src="../GangaBasin/rightPng/compare_tool.png" style="margin-top: 80px; opacity: 0.9;" max-height="300" contain alt="Comparison Tool Image"></v-img>
             </div>
         </v-navigation-drawer>
 

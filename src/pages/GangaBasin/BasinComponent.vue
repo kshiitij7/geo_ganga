@@ -51,6 +51,17 @@ export default {
             }),
             visible: false,
         });
+        const indiaCountryBoundary = new TileLayer({
+            title: 'India Boundary',
+            type: 'overlay',
+            source: new TileWMS({
+              url: 'http://localhost:8080/geoserver/Geo-Ganga/wms?',
+                params: {'LAYERS': 'india_country_boundary_4326',  'TILED': true, 'VERSION': '1.1.1', },
+                serverType: 'geoserver',
+                tileGrid: new TileWMS().getTileGridForProjection(getProjection('EPSG:4326')),
+            }),
+            visible: true,
+        });
         const basinBoundary = new TileLayer({
             title: 'Ganga Basin',
             type: 'overlay',
@@ -101,7 +112,7 @@ export default {
         const map = new Map({
             controls: defaultControls().extend([scaleControl]),
             target: this.$refs.map,
-            layers: [bhuvanLayer, osmLayer, bingLayer, basinSubDistrictsBoundary, basinDistrictsBoundary, basinStatesBoundary, basinBoundary],
+            layers: [bhuvanLayer, osmLayer, bingLayer, basinSubDistrictsBoundary, basinDistrictsBoundary, basinStatesBoundary, indiaCountryBoundary,basinBoundary ],
             view: new View({ projection: 'EPSG:4326', center:[82.0662, 26.2648], zoom: 6.5, minZoom: 6.5,}),
         });
 
