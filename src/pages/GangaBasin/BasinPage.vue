@@ -219,7 +219,7 @@ export default {
             adminBoundary: null,
             timeSeries: null,
             baseMapsLayers: ['Bing', 'Open Street Map', 'Bhuvan Satellite Imagery'],
-            adminBoundaryLayers: ['Ganga Basin', 'State Boundary', 'District Boundary', 'Sub-District Boundary'],
+            adminBoundaryLayers: ['India Boundary','Ganga Basin', 'State Boundary', 'District Boundary', 'Sub-District Boundary'],
             timeSeriesLayers: ['Evapotranspiration', 'Precipitation', 'Temperature'],
 
             // Right
