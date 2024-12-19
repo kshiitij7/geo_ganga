@@ -28,7 +28,7 @@
         </v-navigation-drawer>
 
         <!-- Dynamic Drawer -->
-        <v-navigation-drawer v-model="leftDrawer" location="left" :width="250" color="white">
+        <v-navigation-drawer v-model="isLeftDrawerOpen" location="left" :width="250">
             <!-- Layers Content -->
             <template v-if="activeLeftTab === 'layers'">
                 <v-list-item>
@@ -213,7 +213,7 @@ export default {
     data() {
         return {
             // Left
-            leftDrawer: false,
+            isLeftDrawerOpen: false,
             activeLeftTab: null,
             baseMaps: null,
             adminBoundary: null,
@@ -243,8 +243,15 @@ export default {
     },
     methods: {
         openLeftDrawer(leftTab) {
-            this.activeLeftTab = leftTab;
-            this.leftDrawer = !this.leftDrawer;
+            if(this.activeLeftTab === leftTab && this.isLeftDrawerOpen){
+                this.isLeftDrawerOpen = false;
+                this.activeLeftTab = null;
+            } else {
+                this.activeLeftTab = leftTab;
+                this.isLeftDrawerOpen = true;
+            }
+            // this.activeLeftTab = leftTab;
+            // this.isLeftDrawerOpen = !this.isLeftDrawerOpen;
         },
         openRightDrawer(tool) {
             if (this.activeTool === tool && this.isRightDrawerOpen) { // Close the drawer if the same tool button is clicked again
