@@ -5,7 +5,9 @@
 
 <script>
 import 'ol/ol.css';
-import { Map } from 'ol';
+import {
+    Map
+} from 'ol';
 import BingMaps from 'ol/source/BingMaps';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
@@ -13,17 +15,34 @@ import OSM from 'ol/source/OSM';
 import LayerSwitcher from 'ol-layerswitcher';
 import 'ol-layerswitcher/dist/ol-layerswitcher.css';
 import TileWMS from 'ol/source/TileWMS';
-import { get as getProjection} from 'ol/proj';
+import {
+    get as getProjection
+} from 'ol/proj';
 import FullScreen from 'ol/control/FullScreen';
-import {Draw,} from 'ol/interaction';
-import { Vector as VectorSource} from 'ol/source';
-import {Vector as VectorLayer} from 'ol/layer';
-import {MousePosition} from 'ol/control'; 
-import {ScaleLine,defaults as defaultControls} from 'ol/control.js';
-import {createStringXY} from 'ol/coordinate';
+import {
+    Draw,
+} from 'ol/interaction';
+import {
+    Vector as VectorSource
+} from 'ol/source';
+import {
+    Vector as VectorLayer
+} from 'ol/layer';
+import {
+    MousePosition
+} from 'ol/control';
+import {
+    ScaleLine,
+    defaults as defaultControls
+} from 'ol/control.js';
+import {
+    createStringXY
+} from 'ol/coordinate';
 import eventBus from '@/event-bus';
-// import { fromLonLat } from 'ol/proj';
-import { getLength, getArea } from 'ol/sphere';
+import {
+    getLength,
+    getArea
+} from 'ol/sphere';
 
 export default {
     name: 'BasinComponent',
@@ -154,7 +173,12 @@ export default {
             }),
         });
 
-        const mousePositionControl = new MousePosition({projection: 'EPSG:4326', coordinateFormat: createStringXY(4), target: document.getElementById('mouse-position'), className: '', });
+        const mousePositionControl = new MousePosition({
+            projection: 'EPSG:4326',
+            coordinateFormat: createStringXY(4),
+            target: document.getElementById('mouse-position'),
+            className: '',
+        });
         map.addControl(mousePositionControl);
 
         // Measurement Layer
@@ -162,11 +186,13 @@ export default {
         this.measurementLayer = new VectorLayer({
             source: this.measurementSource,
             style: {
-                'fill-color': 'rgba(255, 58, 51, 0.25)',
-                'stroke-color': 'yellow',
-                'stroke-width': 2,
+                'fill-color': 'rgba(255, 255, 255, 0.2)',
+                'stroke-color': 'rgba(255, 255, 255, 0.8)',
+                'stroke-lineDash': [10, 10],
+                'stroke-width': 3,
             },
         });
+
         map.addLayer(this.measurementLayer);
 
         // Listen to events from BasinPage to activate and set measurement mode
@@ -202,24 +228,35 @@ export default {
             this.activateMeasurement(mode);
         },
         activateMeasurement(mode) {
-        const type = mode === 'Length' ? 'LineString' : 'Polygon';
-        this.drawInteraction = new Draw({
-            source: this.measurementSource,
-            type: type,
-        });
-        this.drawInteraction.on('drawend', (event) => {
-            const feature = event.feature;
-            const geometry = feature.getGeometry();
-            if (mode === 'Length') {
-                const length = getLength(geometry);
-                alert(`Length: ${length*100} km`);
-            } else if (mode === 'Area') {
-                const area = getArea(geometry);
-                alert(`Area: ${area*1000} km²`);
-            }
-        });
-        this.map.addInteraction(this.drawInteraction);
-    },
+            const type = mode === 'Length' ? 'LineString' : 'Polygon';
+            this.drawInteraction = new Draw({
+                source: this.measurementSource,
+                type: type,
+            });
+            this.drawInteraction.on('drawend', (event) => {
+                const feature = event.feature;
+                const geometry = feature.getGeometry();
+                const transformedGeometry = geometry.clone().transform('EPSG:4326', 'EPSG:3857');
+                if (mode === 'Length') {
+                    const length = getLength(transformedGeometry);
+                    if (length > 100) {
+                        alert(`Length: ${(length / 1000).toFixed(2)} km`);
+                    } else {
+                        alert(`Length: ${length.toFixed(2)} m`);
+                    }
+                } else if (mode === 'Area') {
+                    const area = getArea(transformedGeometry);
+
+                    if (area > 10000) {
+                        alert(`Area: ${(area / 1e6).toFixed(2)} km²`);
+                    } else {
+                        alert(`Area: ${area.toFixed(2)} m²`);
+                    }
+                }
+            });
+
+            this.map.addInteraction(this.drawInteraction);
+        },
 
         deactivateMeasurement() {
             if (this.drawInteraction) {
