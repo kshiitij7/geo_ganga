@@ -163,7 +163,7 @@
                                     <v-btn :color="activeMeasurement === 'Area' ? 'blue' : ''" prepend-icon="mdi-pentagon-outline" stacked @click="activateMeasurement('Area')">Area</v-btn>
                                 </v-col>
                                 <v-col cols="4" class="text-center"> 
-                                    <v-btn color="#700B0B" prepend-icon="mdi-delete" stacked @click="clearMeasurements">Clear </v-btn>
+                                    <v-btn color="#700B0B" prepend-icon="mdi-delete" stacked @click="clearMeasurements" v-tooltip="'Clear or Deactivate'">Clear </v-btn>
                                 </v-col>
                             </v-row>
                         </v-container>
