@@ -1,12 +1,12 @@
 <template>
 <div ref="map" class="map" style=" width: 100%;height: 100%;"></div>
-<div id="mouse-position" style="position: absolute;bottom: 5.4%; left: 9%; background-color: rgba(0, 0, 0, 0.7);color: white; padding: 0.1em 0.1em; border-radius: 4px; font-family: 'Poppins', sans-serif ; font-size: calc(5px + 0.5vw); z-index: 1000; pointer-events: none; max-width: 30%; text-align: center;"></div>
+<div id="mouse-pos" style="position: absolute;bottom: 5.4%; left: 9%; background-color: rgba(0, 0, 0, 0.7);color: white; padding: 0.1em 0.1em; border-radius: 4px; font-family: 'Poppins', sans-serif ; font-size: calc(5px + 0.5vw); z-index: 1000; pointer-events: none; max-width: 30%; text-align: center;"></div>
 <div id="scale-line" style="position: absolute; left: 3%;"></div>
 </template>
 
 <script>
 import 'ol/ol.css';
-import { Map} from 'ol';
+import { Map } from 'ol';
 import BingMaps from 'ol/source/BingMaps';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
@@ -28,6 +28,7 @@ import Overlay from 'ol/Overlay.js';
 
 export default {
     name: 'BasinComponent',
+
     mounted() {
         const osmLayer = new TileLayer({
             title: 'Open Street Map',
@@ -114,7 +115,7 @@ export default {
         const scaleControl = new ScaleLine({units: 'metric',bar: true,steps: 5,text: true,minWidth: 200, dpi:96, target: 'scale-line',});
         map.addControl(scaleControl);
 
-        const mousePositionControl = new MousePosition({projection: 'EPSG:4326', coordinateFormat: createStringXY(4), target: document.getElementById('mouse-position'), className: '',});
+        const mousePositionControl = new MousePosition({projection: 'EPSG:4326', coordinateFormat: createStringXY(4), target: document.getElementById('mouse-pos'), className: '',});
         map.addControl(mousePositionControl);
         
         const layerSwitcher = new LayerSwitcher({activationMode: 'click',startActive: false,tipLabel: 'Layers',collapseLabel: '\u00BB',expandLabel: '\u00AB',showRoot: false,});
@@ -129,12 +130,11 @@ export default {
         map.addLayer(this.measurementLayer);
 
         this.map = map;
-this.measurementOverlays = [];
+        this.measurementOverlays = []; //calculation answers
         // Listen to events from BasinPage to activate and set measurement mode
         eventBus.on('set-measurement-mode', this.setMeasurementMode);
         eventBus.on('clear-measurements', this.deactivateMeasurement);
-        eventBus.on('clear-measurements', this.clearMeasurements);
-       
+        eventBus.on('clear-measurements', this.clearMeasurements);      
     },
 
     methods: {
@@ -145,64 +145,56 @@ this.measurementOverlays = [];
         },
         activateMeasurement(mode) {
             const type = mode === 'Length' ? 'LineString' : 'Polygon';
-            this.drawInteraction = new Draw({
-                source: this.measurementSource,
-                type: type,
+            this.drawInteraction = new Draw({source: this.measurementSource,type: type,});
+            const measurementOverlay = document.createElement('div');
+            measurementOverlay.className = 'measurement-overlay';
+            measurementOverlay.style.position = 'absolute';
+            measurementOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+            measurementOverlay.style.color = 'white';
+            measurementOverlay.style.padding = '2px 4px';
+            measurementOverlay.style.borderRadius = '4px';
+            measurementOverlay.style.fontSize = '12px';
+            measurementOverlay.style.pointerEvents = 'none';
+            const overlay = new Overlay({element: measurementOverlay,positioning: 'center-center',stopEvent: false,});
+        
+            this.map.addOverlay(overlay);
+            this.drawInteraction.on('drawstart', (event) => {
+                const geometry = event.feature.getGeometry();
+                geometry.on('change', () => {
+                const coordinates = geometry.getLastCoordinate();
+                overlay.setPosition(coordinates);
+                const transformedGeometry = geometry.clone().transform('EPSG:4326', 'EPSG:3857');
+                if (mode === 'Length') {
+                    const length = getLength(transformedGeometry);
+                    const displayLength = length > 100 ? `${(length / 1000).toFixed(2)} km` : `${length.toFixed(2)} m`;
+                    measurementOverlay.innerHTML = `Length: ${displayLength}`;
+                } else if (mode === 'Area') {                    
+                    const area = getArea(transformedGeometry);  
+                    const displayArea =area > 10000 ? `${(area / 1e6).toFixed(2)} km²` : `${area.toFixed(2)} m²`;
+                    measurementOverlay.innerHTML = `Area: ${displayArea}`;
+                    overlay.setPosition(geometry.getInteriorPoint().getCoordinates());
+                }
+                });
             });
-    const measurementOverlay = document.createElement('div');
-    measurementOverlay.className = 'measurement-overlay';
-    measurementOverlay.style.position = 'absolute';
-    measurementOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-    measurementOverlay.style.color = 'white';
-    measurementOverlay.style.padding = '2px 4px';
-    measurementOverlay.style.borderRadius = '4px';
-    measurementOverlay.style.fontSize = '12px';
-    measurementOverlay.style.pointerEvents = 'none';
-    const overlay = new Overlay({element: measurementOverlay,positioning: 'center-center',stopEvent: false,
-    });
-    this.map.addOverlay(overlay);
-           
-    this.drawInteraction.on('drawstart', (event) => {
-        const geometry = event.feature.getGeometry();
 
-        geometry.on('change', () => {
-            const coordinates = geometry.getLastCoordinate();
-            overlay.setPosition(coordinates);
+            this.drawInteraction.on('drawend', (event) => {
+            const feature = event.feature;
+            const geometry = feature.getGeometry();
             const transformedGeometry = geometry.clone().transform('EPSG:4326', 'EPSG:3857');
+
             if (mode === 'Length') {
                 const length = getLength(transformedGeometry);
-                const displayLength =
-                    length > 100
-                        ? `${(length / 1000).toFixed(2)} km`
-                        : `${length.toFixed(2)} m`;
+                const displayLength = length > 100    ? `${(length / 1000).toFixed(2)} km` : `${length.toFixed(2)} m`;
                 measurementOverlay.innerHTML = `Length: ${displayLength}`;
-            } else if (mode === 'Area') {
-                const area = getArea(transformedGeometry);
-                const displayArea =area > 10000 ? `${(area / 1e6).toFixed(2)} km²` : `${area.toFixed(2)} m²`;
+            }else if (mode === 'Area') { 
+                const area = getArea(transformedGeometry); 
+                const displayArea = area > 10000  ? `${(area / 1e6).toFixed(2)} km²`  : `${area.toFixed(2)} m²`;
                 measurementOverlay.innerHTML = `Area: ${displayArea}`;
                 overlay.setPosition(geometry.getInteriorPoint().getCoordinates());
-            }
-        });
-    });
-
-    this.drawInteraction.on('drawend', (event) => {
-        const feature = event.feature;
-        const geometry = feature.getGeometry();
-        const transformedGeometry = geometry.clone().transform('EPSG:4326', 'EPSG:3857');
-
-        if (mode === 'Length') {
-            const length = getLength(transformedGeometry);
-            const displayLength = length > 100    ? `${(length / 1000).toFixed(2)} km` : `${length.toFixed(2)} m`;
-            measurementOverlay.innerHTML = `Length: ${displayLength}`;
-        } else if (mode === 'Area') { 
-          const area = getArea(transformedGeometry); 
-          const displayArea = area > 10000  ? `${(area / 1e6).toFixed(2)} km²`  : `${area.toFixed(2)} m²`;
-            measurementOverlay.innerHTML = `Area: ${displayArea}`;
-            overlay.setPosition(geometry.getInteriorPoint().getCoordinates());
         }
-    });
-    this.map.addInteraction(this.drawInteraction);
-    this.measurementOverlays.push(overlay);
+        });
+        this.map.addInteraction(this.drawInteraction);
+        this.measurementOverlays.push(overlay);
         },
 
         deactivateMeasurement() {
@@ -214,14 +206,14 @@ this.measurementOverlays = [];
             }
         },
         clearMeasurements() {
-      this.measurementSource.clear();
-      // Remove all overlays (measurements)
-      this.measurementOverlays.forEach((overlay) => {
+        this.measurementSource.clear();
+        // Remove all overlays (measurements)
+        this.measurementOverlays.forEach((overlay) => {
         this.map.removeOverlay(overlay);
-      });
-      this.measurementOverlays = []; // Reset the overlay array
+        });
+        this.measurementOverlays = []; // Reset the overlay array
+        },
     },
-  },
 };
 </script>
 

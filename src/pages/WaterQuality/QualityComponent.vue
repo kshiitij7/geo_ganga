@@ -1,23 +1,6 @@
 <template>
     <div ref="map2" class="map2" style="width: 100%; height: 100%"></div>
-    <div
-      id="mouse-position"
-      style="
-        position: absolute;
-        bottom: 5.7%;
-        left: 9%;
-        background-color: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 0.1em 0.1em;
-        border-radius: 4px;
-        font-family: 'Poppins', sans-serif;
-        font-size: calc(5px + 0.5vw);
-        z-index: 1000;
-        pointer-events: none;
-        max-width: 30%;
-        text-align: center;
-      "
-    ></div>
+    <div id="mouse-position" style=" position: absolute; bottom: 5.7%; left: 9%;background-color: rgba(0, 0, 0, 0.7); color: white; padding: 0.1em 0.1em; border-radius: 4px; font-family: 'Poppins', sans-serif; font-size: calc(5px + 0.5vw); z-index: 1000; pointer-events: none; max-width: 30%; text-align: center; " ></div>
   </template>
   
   <script>

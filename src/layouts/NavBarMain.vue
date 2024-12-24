@@ -39,11 +39,11 @@
         <v-divider :thickness="1" color="black" vertical></v-divider>
     
         <v-btn :class="{'active': isActive('/tab3')}">
-            <v-icon left>mdi-star</v-icon><div style="font-family: 'Poppins', sans-serif; font-weight: 400;"> Tab 3</div>
+            <v-icon left>mdi-alert</v-icon><div style="font-family: 'Poppins', sans-serif; font-weight: 400;"> Flood Hazard</div>
         </v-btn>
         <v-divider :thickness="1" color="black" vertical></v-divider>
         <v-btn :class="{'active': isActive('/tab3')}">
-            <v-icon left>mdi-cloud</v-icon><div style="font-family: 'Poppins', sans-serif; font-weight: 400;"> Tab 4</div>
+            <v-icon left>mdi-recycle</v-icon><div style="font-family: 'Poppins', sans-serif; font-weight: 400;"> Solid Waste</div>
         </v-btn>
         <v-divider :thickness="1" color="black" vertical></v-divider>
     

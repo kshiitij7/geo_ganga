@@ -100,6 +100,18 @@
                     </v-list-item-title>
                 </v-list-item>
                 <v-divider :thickness="2" color="white"></v-divider>
+                <!-- Crop Button -->
+                <v-list-item @click="openRightDrawer('cropTool')" class="cursor-pointer">
+                    <v-list-item-title>
+                        <v-tooltip location="right">
+                            <template v-slot:activator="{ props: tooltip }">
+                                <v-icon v-bind="tooltip">mdi-crop</v-icon>
+                            </template>
+                            <span>Crop Tool</span>
+                        </v-tooltip>
+                    </v-list-item-title>
+                </v-list-item>
+                <v-divider :thickness="2" color="white"></v-divider>
                 <!-- Compare Button -->
                 <v-list-item @click="openRightDrawer('compare')" class="cursor-pointer">
                     <v-list-item-title>
@@ -111,6 +123,7 @@
                         </v-tooltip>
                     </v-list-item-title>
                 </v-list-item>
+                
             </v-list>
         </v-navigation-drawer>
 
@@ -128,7 +141,7 @@
                     </v-card-text>
                 </v-card>
                 <v-divider :thickness="3"></v-divider>
-                <v-img src="../GangaBasin/rightPng/search_button.png" style="margin-top: 100px; opacity: 0.8;" contain alt="Comparison Tool Image"></v-img>
+                <v-img src="../GangaBasin/rightPng/search_tool.png" style="margin-top: 100px; opacity: 0.8;" contain alt="Comparison Tool Image"></v-img>
             </div>
 
             <div v-else-if="activeTool === 'featureInfo'">
@@ -194,6 +207,26 @@
                 </v-card>
                 <v-divider :thickness="3"></v-divider>
                 <v-img src="../GangaBasin/rightPng/compare_tool.png" style="margin-top: 80px; opacity: 0.9;" max-height="300" contain alt="Comparison Tool Image"></v-img>
+            </div>
+
+            <div v-else-if="activeTool === 'cropTool'">
+                <v-card elevation="0">
+                    <v-card-title>
+                        <div class="text-h5" style="font-family: 'Poppins', sans-serif; font-weight:500; text-align: center;">Crop Tool</div>
+                    </v-card-title>
+                    <v-divider :thickness="2" color="black"></v-divider>
+                    <v-card-text style="margin-bottom: 30px; margin-top: 10px;">
+                        <v-container class="icon-container" justify="center">
+                            <v-row justify="center">
+                                <v-col cols="5" class="text-center">
+                                    <v-btn prepend-icon="mdi-rectangle-outline" stacked v-tooltip="'Area of Interest'">AOI</v-btn>
+                                </v-col>
+                            </v-row>
+                        </v-container>
+                    </v-card-text>
+                </v-card>
+                <v-divider :thickness="3"></v-divider>
+                <v-img src="../GangaBasin/rightPng/crop_tool.png" style="margin-top: 80px; opacity: 0.7;" max-height="300" contain alt="Comparison Tool Image"></v-img>
             </div>
         </v-navigation-drawer>
 
